@@ -16,7 +16,7 @@ const logout = () => {
     <!-- Sidebar / Topbar for Authenticated Users -->
     <nav v-if="authStore.isAuthenticated" class="w-full md:w-64 bg-white border-r border-gray-200 shrink-0 flex flex-col soft-shadow z-10 transition-all duration-300">
       <div class="p-6">
-        <h1 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600 tracking-tight">Richie's Shop</h1>
+        <h1 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600 tracking-tight">Richie'z Shop</h1>
       </div>
       <div class="flex-1 overflow-y-auto w-full">
         <ul class="space-y-2 p-4">
