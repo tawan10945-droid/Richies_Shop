@@ -1,0 +1,54 @@
+# render.yaml (infrastructure as code for Render)
+# กำหนดค่า Service สำหรับ Environment บน Render
+
+services:
+  # ---------------------------------------------
+  # 1. Backend Web Service (Node.js + Prisma)
+  # ---------------------------------------------
+  - type: web
+    name: shop-backend-api
+    env: node
+    region: singapore # ตำแหน่ง Server ใกล้ไทย
+    plan: free # ถ้ารันเครื่องเสียเงินก็เปลี่ยนเป็น starter, standard
+    rootDir: backend # ชี้ไปที่โฟลเดอร์ฝั่ง Backend
+    
+    # คำสั่งเตรียม Environment (ติดตั้ง Packages และสร้าง Database Client)
+    buildCommand: "npm install && npx prisma generate"
+
+    # คำสั่งรัน Server หลังจาก Build เสร็จ
+    startCommand: "npm run start"
+
+    # ตัวแปรระบบต่างๆ ที่ต้องใช้ (เช่นค่าการต่อ DB, Secret JWT)
+    envVars:
+      - key: DATABASE_URL
+        # อันนี้แนะนำให้ใส่ค่าตรงๆ บน Dashboard ของ Render (จากแท็บ Environment) เพื่อความปลอดภัย
+        # หรือสมมติเป็น Database ทั่วไป
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: PORT
+        value: 10000 # ค่า Default Port สำหรับ Render
+
+  # ---------------------------------------------
+  # 2. Frontend Static Site (Vue.js + Vite)
+  # ---------------------------------------------
+  - type: web
+    name: shop-frontend-ui
+    env: static # บอกให้ Render ทราบว่าเป็น Static Assets ที่ผ่านการ Build แล้ว
+    region: singapore
+    plan: free
+    rootDir: frontend # ชี้ไปที่โฟลเดอร์ฝั่ง Frontend
+    
+    # คำสั่งเตรียม Environment โดยการติดตั้งและ Build โค้ดที่เขียนด้วย Vue
+    buildCommand: "npm install && npm run build"
+
+    # ถ้าระบุว่า env: static ช่อง startCommand ใส่เป็น Publish Directory แทบจะแทนหมด
+    # สำหรับ Vite โปรเจกต์ต่างๆ ปกติไฟล์ build ไปตกอยู่ที่โฟลเดอร์ `dist` ของใน `frontend`
+    publishPath: "dist"
+
+    # ป้องกันเผื่อใช้ Vue Router โหมด History / Vite
+    # ให้ Route กลับไปที่ index.html
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

@@ -1,0 +1,26 @@
+name: CD (Continuous Deployment) to Render
+
+on:
+  push:
+    branches:
+      - main # ทริกเกอร์เมื่อมีการ Push เข้าสู่ branch main
+
+jobs:
+  deploy:
+    name: Trigger Render Deploy Hook
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger Render Deploy (Backend API)
+        # ใช้ Deploy Hook URL ของ Render สำหรับ Web Service (Backend)
+        # รูปแบบ URL อาจะคล้ายๆ https://api.render.com/deploy/srv-...
+        run: |
+          curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        # หากมีพารามิเตอร์อื่นๆ สามารถเพิ่มลงไปในคำสั่ง curl ได้
+
+      - name: Trigger Render Deploy (Frontend Static Site)
+        # ตัวอย่างหากคุณสร้าง Static Site ไว้ที่ Render คู่กัน
+        # และมี Deploy Hook URL แยกกัน
+        # หากรวมกัน (Monorepo) บน Render ก็อาจจะไม่ต้องท่านี้
+        run: |
+          curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_URL_FRONTEND }}

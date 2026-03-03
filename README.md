@@ -75,6 +75,20 @@
 - `backend/`: โค้ดของฝั่งเซิร์ฟเวอร์ (API, Database Models)
 - `frontend/`: โค้ดของฝั่งหน้าเว็บ (Vue Components, Views, Store)
 - `.github/`: ตั้งค่าสำหรับ GitHub Actions (CI/CD)
+- `render.yaml`: ไฟล์กำหนดค่า (Infrastructure as Code) สำหรับ Deploy บน Render
+
+## ☁️ การนำแอปพลิเคชันขึ้นระบบจริง (Deployment - Render)
+
+โปรเจกต์นี้ได้รับการตั้งค่าให้รองรับการ Deploy ไปยัง [Render.com](https://render.com) ได้ง่ายๆ โดยใช้ไฟล์ `render.yaml` เป็น Blueprint (Infrastructure as Code) ซึ่งจะจัดการทั้ง Backend (Web Service) และ Frontend (Static Site) ในคราวเดียว
+
+1. หลังจากอัปโหลดโค้ดนี้ขึ้น GitHub `main` branch
+2. ล็อกอินเข้าสู่ **Render Dashboard** และไปที่แท็บ **Blueprints**
+3. คลิกปุ่ม **New Blueprint Instance** มุมขวาบน
+4. ลิงก์เข้ากับ Repository รูปแบบนี้
+5. ระบุค่า Environment Variables เล็กๆ น้อยๆ สำหรับ Database (`DATABASE_URL`) และ Secret (`JWT_SECRET`) ที่หน้า Dashboard
+6. กดปุ่ม `Apply` และให้ Render จัดการให้ได้เลย
+
+นอกจากนี้ การ Deploy ซ้ำแบบอัตโนมัติ (CD) ได้ตั้งค่าไว้แล้วใน `.github/workflows/cd.yml` ที่จะยิง Webhook (Deploy Hook URL) ไปยัง Render เมื่อมีการอัปเดตโค้ดเข้าสู่ `main` branch
 
 ## 📄 License
 ISC License (กำหนดใน Backend)
