@@ -35,7 +35,6 @@ services:
   - type: web
     name: shop-frontend-ui
     env: static # บอกให้ Render ทราบว่าเป็น Static Assets ที่ผ่านการ Build แล้ว
-    region: singapore
     plan: free
     rootDir: frontend # ชี้ไปที่โฟลเดอร์ฝั่ง Frontend
     
