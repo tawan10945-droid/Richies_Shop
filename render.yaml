@@ -44,7 +44,7 @@ services:
 
     # ถ้าระบุว่า env: static ช่อง startCommand ใส่เป็น Publish Directory แทบจะแทนหมด
     # สำหรับ Vite โปรเจกต์ต่างๆ ปกติไฟล์ build ไปตกอยู่ที่โฟลเดอร์ `dist` ของใน `frontend`
-    publishPath: "dist"
+    staticPublishPath: "dist"
 
     # ป้องกันเผื่อใช้ Vue Router โหมด History / Vite
     # ให้ Route กลับไปที่ index.html
