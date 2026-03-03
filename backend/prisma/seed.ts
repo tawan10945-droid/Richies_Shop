@@ -5,8 +5,8 @@ const prisma = new PrismaClient();
 
 async function main() {
     console.log('Start seeding...');
-    const username = 'admin';
-    const password = 'passwordxyz';
+    const username = 'richieshop';
+    const password = 'richieshop09';
 
     const existingUser = await prisma.user.findUnique({ where: { username } });
     if (existingUser) {
