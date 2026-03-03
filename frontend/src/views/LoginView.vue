@@ -2,12 +2,13 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
+import 'dotenv/config';
 
 const router = useRouter()
 const authStore = useAuthStore()
 
-const username = ref('')
-const password = ref('')
+const username = ref(import.meta.env.VITE_DEV_USERNAME || '')
+const password = ref(import.meta.env.VITE_DEV_PASSWORD || '')
 const errorMsg = ref('')
 const isLoading = ref(false)
 
